@@ -177,6 +177,23 @@ func (odbi *ovndb) execute(cmds ...*OvnCommand) error {
 	return nil
 }
 
+func (odbi *ovndb) executeWithResult(cmds ...*OvnCommand) ([]libovsdb.OperationResult, error) {
+	if cmds == nil {
+		return nil, nil
+	}
+	var ops []libovsdb.Operation
+	for _, cmd := range cmds {
+		if cmd != nil {
+			ops = append(ops, cmd.Operations...)
+		}
+	}
+	OperationResult, err := odbi.transact(ops...)
+	if err != nil {
+		return nil, err
+	}
+	return OperationResult, nil
+}
+
 func (odbi *ovndb) float64_to_int(row libovsdb.Row) {
 	for field, value := range row.Fields {
 		if v, ok := value.(float64); ok {
