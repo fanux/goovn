@@ -150,6 +150,7 @@ type Client interface {
 
 	// Exec command, support mul-commands in one transaction.
 	Execute(cmds ...*OvnCommand) error
+	ExecuteWithResult(cmds ...*OvnCommand) ([]libovsdb.OperationResult, error)
 
 	// Close connection to OVN
 	Close() error
@@ -357,6 +358,10 @@ func (c *ovndb) QoSList(ls string) ([]*QoS, error) {
 
 func (c *ovndb) Execute(cmds ...*OvnCommand) error {
 	return c.execute(cmds...)
+}
+
+func (c *ovndb) ExecuteWithResult(cmds ...*OvnCommand) ([]libovsdb.OperationResult, error) {
+	return c.executeWithResult(cmds...)
 }
 
 func (c *ovndb) LSGet(ls string) ([]*LogicalSwitch, error) {
