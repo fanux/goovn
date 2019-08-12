@@ -129,6 +129,14 @@ func (odbi *ovndb) lspSetAddressImp(lsp string, addr ...string) (*OvnCommand, er
 	return &OvnCommand{operations, odbi, make([][]map[string]interface{}, len(operations))}, nil
 }
 
+//func (odbi *ovndb) lspGetAddressImp(lsp string) ([]string, error){
+//	lp, err := odbi.lspGetImp(lsp)
+//	if err != nil {
+//		return nil, err
+//	}
+//	return odbi.func(), nil
+//}
+
 func (odbi *ovndb) lspSetPortSecurityImp(lsp string, security ...string) (*OvnCommand, error) {
 	row := make(OVNRow)
 	port_security, err := libovsdb.NewOvsSet(security)
