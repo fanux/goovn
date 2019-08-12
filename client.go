@@ -37,12 +37,15 @@ type Client interface {
 	// Del external_ids from logical_switch
 	LSExtIdsDel(ls string, external_ids map[string]string) (*OvnCommand, error)
 
+	// Get logical port PORT by name
+	LSPGet(lsp string) (*LogicalSwitchPort, error)
 	// Add logical port PORT on SWITCH
 	LSPAdd(ls string, lsp string) (*OvnCommand, error)
 	// Delete PORT from its attached switch
 	LSPDel(lsp string) (*OvnCommand, error)
 	// Set addressset per lport
 	LSPSetAddress(lsp string, addresses ...string) (*OvnCommand, error)
+	//LSPGetAddress(lsp string) ([]string, error)
 	// Set port security per lport
 	LSPSetPortSecurity(lsp string, security ...string) (*OvnCommand, error)
 	// Get all lport by lswitch
@@ -216,6 +219,10 @@ func (c *ovndb) LSExtIdsDel(ls string, external_ids map[string]string) (*OvnComm
 	return c.lsExtIdsDelImp(ls, external_ids)
 }
 
+func (c *ovndb) LSPGet(lsp string) (*LogicalSwitchPort, error) {
+	return c.lspGetImp(lsp)
+}
+
 func (c *ovndb) LSPAdd(ls string, lsp string) (*OvnCommand, error) {
 	return c.lspAddImp(ls, lsp)
 }
@@ -227,6 +234,10 @@ func (c *ovndb) LSPDel(lsp string) (*OvnCommand, error) {
 func (c *ovndb) LSPSetAddress(lsp string, addresses ...string) (*OvnCommand, error) {
 	return c.lspSetAddressImp(lsp, addresses...)
 }
+
+//func (c *ovndb) LSPGetAddress(lsp string) ([]string, error){
+//	return c.lspGetAddressImp(lsp)
+//}
 
 func (c *ovndb) LSPSetPortSecurity(lsp string, security ...string) (*OvnCommand, error) {
 	return c.lspSetPortSecurityImp(lsp, security...)
