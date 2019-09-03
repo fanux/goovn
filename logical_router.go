@@ -97,6 +97,10 @@ func (odbi *ovndb) lrGetImp(name string) ([]*LogicalRouter, error) {
 			lrList = append(lrList, lr)
 		}
 	}
+
+	if len(lrList) == 0 {
+		return nil, ErrorNotFound
+	}
 	return lrList, nil
 }
 
